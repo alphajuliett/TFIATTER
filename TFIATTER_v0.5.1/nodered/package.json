@@ -1,0 +1,11 @@
+{
+  "name": "tfiatter-nodered-runtime",
+  "version": "0.4.0",
+  "private": true,
+  "description": "Node-RED backend runtime for TFI@TTER v0.4.0",
+  "dependencies": {
+    "bcryptjs": "3.0.2",
+    "jsonwebtoken": "9.0.2",
+    "pg": "8.16.3"
+  }
+}

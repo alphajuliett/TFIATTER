@@ -1,0 +1,2168 @@
+[
+  {
+    "id": "069900ac84e84deb",
+    "type": "tab",
+    "label": "TFI@TTER API",
+    "disabled": false,
+    "info": "Backend HTTP de TFI@TTER. Toutes les routes applicatives passent par Node-RED et PostgreSQL."
+  },
+  {
+    "id": "36f1dcbdf9c345e1",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/health",
+    "url": "/api/health",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 60,
+    "wires": [
+      [
+        "d32a8df961584cc2"
+      ]
+    ]
+  },
+  {
+    "id": "d32a8df961584cc2",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "health",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.health(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 60,
+    "wires": [
+      [
+        "791d1b2bfbd249eb"
+      ]
+    ]
+  },
+  {
+    "id": "791d1b2bfbd249eb",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "122c5c919f7f45dd",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/register",
+    "url": "/api/register",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 120,
+    "wires": [
+      [
+        "7289e57b2ce84bb2"
+      ]
+    ]
+  },
+  {
+    "id": "7289e57b2ce84bb2",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "register",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.register(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 120,
+    "wires": [
+      [
+        "af87413d02644344"
+      ]
+    ]
+  },
+  {
+    "id": "af87413d02644344",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "57ebb76435b64708",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/login",
+    "url": "/api/login",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 180,
+    "wires": [
+      [
+        "a3dbcbd2753e4e54"
+      ]
+    ]
+  },
+  {
+    "id": "a3dbcbd2753e4e54",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "login",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.login(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 180,
+    "wires": [
+      [
+        "67996392b7cf477b"
+      ]
+    ]
+  },
+  {
+    "id": "67996392b7cf477b",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "c266c1ef0d284aa1",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/me",
+    "url": "/api/me",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 240,
+    "wires": [
+      [
+        "708e548a7383420a"
+      ]
+    ]
+  },
+  {
+    "id": "708e548a7383420a",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "me",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.me(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 240,
+    "wires": [
+      [
+        "4d2681a2a45f4d24"
+      ]
+    ]
+  },
+  {
+    "id": "4d2681a2a45f4d24",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "65d13931bc7b4175",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "PATCH /api/me",
+    "url": "/api/me",
+    "method": "patch",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 300,
+    "wires": [
+      [
+        "de669b9a761346d0"
+      ]
+    ]
+  },
+  {
+    "id": "de669b9a761346d0",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "updateMe",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.updateMe(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 300,
+    "wires": [
+      [
+        "db4788a095f34bc0"
+      ]
+    ]
+  },
+  {
+    "id": "db4788a095f34bc0",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "46b635ece6f443c1",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/feed",
+    "url": "/api/feed",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 360,
+    "wires": [
+      [
+        "145e9d5ff5264f4b"
+      ]
+    ]
+  },
+  {
+    "id": "145e9d5ff5264f4b",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "feed",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.feed(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 360,
+    "wires": [
+      [
+        "823bd92053f04032"
+      ]
+    ]
+  },
+  {
+    "id": "823bd92053f04032",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 360,
+    "wires": []
+  },
+  {
+    "id": "e6d67163d9884cb1",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/posts",
+    "url": "/api/posts",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 420,
+    "wires": [
+      [
+        "eddaa1d6ec6e4996"
+      ]
+    ]
+  },
+  {
+    "id": "eddaa1d6ec6e4996",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "createPost",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.createPost(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 420,
+    "wires": [
+      [
+        "ca11489d88244563"
+      ]
+    ]
+  },
+  {
+    "id": "ca11489d88244563",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "1f72858b340f4e9f",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/posts/:id/like",
+    "url": "/api/posts/:id/like",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 480,
+    "wires": [
+      [
+        "d6041b1ac06646ba"
+      ]
+    ]
+  },
+  {
+    "id": "d6041b1ac06646ba",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "toggleLike",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.toggleLike(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 480,
+    "wires": [
+      [
+        "bfc79d550d0f4bc0"
+      ]
+    ]
+  },
+  {
+    "id": "bfc79d550d0f4bc0",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 480,
+    "wires": []
+  },
+  {
+    "id": "eabe4e690fa54331",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/posts/:id/retweet",
+    "url": "/api/posts/:id/retweet",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 540,
+    "wires": [
+      [
+        "acee0f9d8d304ea7"
+      ]
+    ]
+  },
+  {
+    "id": "acee0f9d8d304ea7",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "toggleRetweet",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.toggleRetweet(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 540,
+    "wires": [
+      [
+        "7207a9b089214c90"
+      ]
+    ]
+  },
+  {
+    "id": "7207a9b089214c90",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 540,
+    "wires": []
+  },
+  {
+    "id": "9299dacfc5cc4b89",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/posts/:id/comments",
+    "url": "/api/posts/:id/comments",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 600,
+    "wires": [
+      [
+        "0800f7be753e4033"
+      ]
+    ]
+  },
+  {
+    "id": "0800f7be753e4033",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "comments",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.comments(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 600,
+    "wires": [
+      [
+        "55c9141a7aa345fb"
+      ]
+    ]
+  },
+  {
+    "id": "55c9141a7aa345fb",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 600,
+    "wires": []
+  },
+  {
+    "id": "62f7ac67772f44ee",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/posts/:id/comments",
+    "url": "/api/posts/:id/comments",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 660,
+    "wires": [
+      [
+        "5209e407c6084ee0"
+      ]
+    ]
+  },
+  {
+    "id": "5209e407c6084ee0",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "addComment",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.addComment(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 660,
+    "wires": [
+      [
+        "e3f9ddce7f0e4db5"
+      ]
+    ]
+  },
+  {
+    "id": "e3f9ddce7f0e4db5",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 660,
+    "wires": []
+  },
+  {
+    "id": "f81f81c8f99c46b6",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/profile/:username",
+    "url": "/api/profile/:username",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 720,
+    "wires": [
+      [
+        "4d1e84072cf342aa"
+      ]
+    ]
+  },
+  {
+    "id": "4d1e84072cf342aa",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "profile",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.profile(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 720,
+    "wires": [
+      [
+        "2c75f2df96b14840"
+      ]
+    ]
+  },
+  {
+    "id": "2c75f2df96b14840",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 720,
+    "wires": []
+  },
+  {
+    "id": "e10e3e25259543c0",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/profile/:username/posts",
+    "url": "/api/profile/:username/posts",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 780,
+    "wires": [
+      [
+        "5fd8b4ac9fb8428d"
+      ]
+    ]
+  },
+  {
+    "id": "5fd8b4ac9fb8428d",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "profilePosts",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.profilePosts(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 780,
+    "wires": [
+      [
+        "fb9851654f8c4f1d"
+      ]
+    ]
+  },
+  {
+    "id": "fb9851654f8c4f1d",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 780,
+    "wires": []
+  },
+  {
+    "id": "08dd68f90ed14dfe",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/profile/:username/follow",
+    "url": "/api/profile/:username/follow",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 840,
+    "wires": [
+      [
+        "11ec08fa818a4df3"
+      ]
+    ]
+  },
+  {
+    "id": "11ec08fa818a4df3",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "toggleFollow",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.toggleFollow(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 840,
+    "wires": [
+      [
+        "b1dd0215b4a5434c"
+      ]
+    ]
+  },
+  {
+    "id": "b1dd0215b4a5434c",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 840,
+    "wires": []
+  },
+  {
+    "id": "91029bed1dc84125",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/trends",
+    "url": "/api/trends",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 900,
+    "wires": [
+      [
+        "0c18344bcd894dfa"
+      ]
+    ]
+  },
+  {
+    "id": "0c18344bcd894dfa",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "trends",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.trends(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 900,
+    "wires": [
+      [
+        "fbe6410785d24439"
+      ]
+    ]
+  },
+  {
+    "id": "fbe6410785d24439",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 900,
+    "wires": []
+  },
+  {
+    "id": "d7d7e2bf796846de",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/suggestions",
+    "url": "/api/suggestions",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 960,
+    "wires": [
+      [
+        "4fa1f6b181d140be"
+      ]
+    ]
+  },
+  {
+    "id": "4fa1f6b181d140be",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "suggestions",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.suggestions(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 960,
+    "wires": [
+      [
+        "1918ba3b2d70431b"
+      ]
+    ]
+  },
+  {
+    "id": "1918ba3b2d70431b",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 960,
+    "wires": []
+  },
+  {
+    "id": "f7d2a946418b4126",
+    "type": "comment",
+    "z": "069900ac84e84deb",
+    "name": "TFI@TTER",
+    "info": "API REST : auth JWT, fil, TFI@Ts, likes, retweets, commentaires, profils, abonnements, notifications, messages privés, administration, suggestions et tendances.",
+    "x": 1030,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "5f17d42c6ffb4b1d",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "PATCH /api/posts/:id",
+    "url": "/api/posts/:id",
+    "method": "patch",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1020,
+    "wires": [
+      [
+        "c9c3ad9c62504636"
+      ]
+    ]
+  },
+  {
+    "id": "c9c3ad9c62504636",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "updatePost",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.updatePost(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1020,
+    "wires": [
+      [
+        "2698334cdd63434b"
+      ]
+    ]
+  },
+  {
+    "id": "2698334cdd63434b",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 1020,
+    "wires": []
+  },
+  {
+    "id": "d60577cd02f449e3",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "DELETE /api/posts/:id",
+    "url": "/api/posts/:id",
+    "method": "delete",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1080,
+    "wires": [
+      [
+        "5c1c131374c44523"
+      ]
+    ]
+  },
+  {
+    "id": "5c1c131374c44523",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "deletePost",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.deletePost(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1080,
+    "wires": [
+      [
+        "ceccaffceb544ed3"
+      ]
+    ]
+  },
+  {
+    "id": "ceccaffceb544ed3",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 1080,
+    "wires": []
+  },
+  {
+    "id": "20f67a10470a4e7d",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/admin/overview",
+    "url": "/api/admin/overview",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1140,
+    "wires": [
+      [
+        "3096bb69e4a544a0"
+      ]
+    ]
+  },
+  {
+    "id": "3096bb69e4a544a0",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "adminOverview",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.adminOverview(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1140,
+    "wires": [
+      [
+        "c3390b4d9a024af5"
+      ]
+    ]
+  },
+  {
+    "id": "c3390b4d9a024af5",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 1140,
+    "wires": []
+  },
+  {
+    "id": "683fdb9b75b049bd",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/admin/users",
+    "url": "/api/admin/users",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1200,
+    "wires": [
+      [
+        "3ae1f40f48534018"
+      ]
+    ]
+  },
+  {
+    "id": "3ae1f40f48534018",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "adminUsers",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.adminUsers(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1200,
+    "wires": [
+      [
+        "81eada08daa74b4a"
+      ]
+    ]
+  },
+  {
+    "id": "81eada08daa74b4a",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 1200,
+    "wires": []
+  },
+  {
+    "id": "a06fa2c0f1914340",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "PATCH /api/admin/users/:id",
+    "url": "/api/admin/users/:id",
+    "method": "patch",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1290,
+    "wires": [
+      [
+        "b0086dcc11554325"
+      ]
+    ]
+  },
+  {
+    "id": "b0086dcc11554325",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "adminUpdateUser",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.adminUpdateUser(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1290,
+    "wires": [
+      [
+        "81b5ae2c96bc4d3c"
+      ]
+    ]
+  },
+  {
+    "id": "81b5ae2c96bc4d3c",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 1290,
+    "wires": []
+  },
+  {
+    "id": "0df68be411fb4b5e",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/admin/posts",
+    "url": "/api/admin/posts",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1350,
+    "wires": [
+      [
+        "a7cee91773cc4333"
+      ]
+    ]
+  },
+  {
+    "id": "a7cee91773cc4333",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "adminPosts",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.adminPosts(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1350,
+    "wires": [
+      [
+        "f840930c2451459d"
+      ]
+    ]
+  },
+  {
+    "id": "f840930c2451459d",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 1350,
+    "wires": []
+  },
+  {
+    "id": "4e8e4fb6bc734644",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "DELETE /api/admin/posts/:id",
+    "url": "/api/admin/posts/:id",
+    "method": "delete",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1410,
+    "wires": [
+      [
+        "453b86cc57ca496b"
+      ]
+    ]
+  },
+  {
+    "id": "453b86cc57ca496b",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "adminDeletePost",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.adminDeletePost(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1410,
+    "wires": [
+      [
+        "1ea8af216bff4bb5"
+      ]
+    ]
+  },
+  {
+    "id": "1ea8af216bff4bb5",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 1410,
+    "wires": []
+  },
+  {
+    "id": "53a377fab53f486a",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/admin/users",
+    "url": "/api/admin/users",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1230,
+    "wires": [
+      [
+        "159fa69d71814ce9"
+      ]
+    ]
+  },
+  {
+    "id": "159fa69d71814ce9",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "adminCreateUser",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.adminCreateUser(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1230,
+    "wires": [
+      [
+        "9e32631ad1984e82"
+      ]
+    ]
+  },
+  {
+    "id": "9e32631ad1984e82",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "",
+    "statusCode": "",
+    "headers": {},
+    "x": 750,
+    "y": 1230,
+    "wires": []
+  },
+  {
+    "id": "39c821cec05ef45c",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/notifications",
+    "url": "/api/notifications",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 1290,
+    "wires": [
+      [
+        "e8689ee0cdfed9d8"
+      ]
+    ]
+  },
+  {
+    "id": "e8689ee0cdfed9d8",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "notifications",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.notifications(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1290,
+    "wires": [
+      [
+        "ccec207e9ae6273f"
+      ]
+    ]
+  },
+  {
+    "id": "ccec207e9ae6273f",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 750,
+    "y": 1290,
+    "wires": []
+  },
+  {
+    "id": "7234ffe7f4f57be0",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/notifications/read",
+    "url": "/api/notifications/read",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 1340,
+    "wires": [
+      [
+        "5f26afcd4890815a"
+      ]
+    ]
+  },
+  {
+    "id": "5f26afcd4890815a",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "markNotificationsRead",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.markNotificationsRead(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1340,
+    "wires": [
+      [
+        "d7232337220cd9c5"
+      ]
+    ]
+  },
+  {
+    "id": "d7232337220cd9c5",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 750,
+    "y": 1340,
+    "wires": []
+  },
+  {
+    "id": "55c0485cbd7f118a",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/nav-counts",
+    "url": "/api/nav-counts",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 1390,
+    "wires": [
+      [
+        "0962fc7d9ca969ab"
+      ]
+    ]
+  },
+  {
+    "id": "0962fc7d9ca969ab",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "navCounts",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.navCounts(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1390,
+    "wires": [
+      [
+        "489f08aa4e8f19ca"
+      ]
+    ]
+  },
+  {
+    "id": "489f08aa4e8f19ca",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 750,
+    "y": 1390,
+    "wires": []
+  },
+  {
+    "id": "1e0ec3cbacf8ddda",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/messages",
+    "url": "/api/messages",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 1440,
+    "wires": [
+      [
+        "60d854ce5d0c7339"
+      ]
+    ]
+  },
+  {
+    "id": "60d854ce5d0c7339",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "messageConversations",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.messageConversations(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1440,
+    "wires": [
+      [
+        "75aa0abe2d1e5f90"
+      ]
+    ]
+  },
+  {
+    "id": "75aa0abe2d1e5f90",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 750,
+    "y": 1440,
+    "wires": []
+  },
+  {
+    "id": "d9244a71aace7200",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/messages/:username",
+    "url": "/api/messages/:username",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 1490,
+    "wires": [
+      [
+        "7144ffd21ed03d0b"
+      ]
+    ]
+  },
+  {
+    "id": "7144ffd21ed03d0b",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "messageThread",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.messageThread(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1490,
+    "wires": [
+      [
+        "332f2e90ed2e6a7e"
+      ]
+    ]
+  },
+  {
+    "id": "332f2e90ed2e6a7e",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 750,
+    "y": 1490,
+    "wires": []
+  },
+  {
+    "id": "ba4632dafb539c35",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/messages/:username",
+    "url": "/api/messages/:username",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 1540,
+    "wires": [
+      [
+        "2a963037046e83e4"
+      ]
+    ]
+  },
+  {
+    "id": "2a963037046e83e4",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "sendMessage",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.sendMessage(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1540,
+    "wires": [
+      [
+        "02dfa9a396fa9ec3"
+      ]
+    ]
+  },
+  {
+    "id": "02dfa9a396fa9ec3",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 750,
+    "y": 1540,
+    "wires": []
+  },
+  {
+    "id": "c032deletehttp01",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "DELETE /api/messages/:username",
+    "url": "/api/messages/:username",
+    "method": "delete",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 200,
+    "y": 1590,
+    "wires": [
+      [
+        "c032deletefunc01"
+      ]
+    ]
+  },
+  {
+    "id": "c032deletefunc01",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "deleteConversation",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.deleteConversation(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1590,
+    "wires": [
+      [
+        "c032deleteresp01"
+      ]
+    ]
+  },
+  {
+    "id": "c032deleteresp01",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 1590,
+    "wires": []
+  },
+  {
+    "id": "f9874a6cb2d111e1",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/profile/:username/followers",
+    "url": "/api/profile/:username/followers",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 840,
+    "wires": [
+      [
+        "8cdabed04c68ab8a"
+      ]
+    ]
+  },
+  {
+    "id": "8cdabed04c68ab8a",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "profileFollowers",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.profileFollowers(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 500,
+    "y": 840,
+    "wires": [
+      [
+        "d8c1d69938f4567a"
+      ]
+    ]
+  },
+  {
+    "id": "d8c1d69938f4567a",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 760,
+    "y": 840,
+    "wires": []
+  },
+  {
+    "id": "7d2aae4dbab7843c",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/profile/:username/following",
+    "url": "/api/profile/:username/following",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 900,
+    "wires": [
+      [
+        "c6077eae43ac4804"
+      ]
+    ]
+  },
+  {
+    "id": "c6077eae43ac4804",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "profileFollowing",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.profileFollowing(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 500,
+    "y": 900,
+    "wires": [
+      [
+        "2eb354354a3d1379"
+      ]
+    ]
+  },
+  {
+    "id": "2eb354354a3d1379",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 760,
+    "y": 900,
+    "wires": []
+  },
+  {
+    "id": "a035c0f19f3e5a01",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/config/giphy",
+    "url": "/api/config/giphy",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 1640,
+    "wires": [
+      [
+        "a035c0f19f3e5a02"
+      ]
+    ]
+  },
+  {
+    "id": "a035c0f19f3e5a02",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "giphyConfig",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.giphyConfig(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 1640,
+    "wires": [
+      [
+        "791d1b2bfbd249eb"
+      ]
+    ]
+  },
+  {
+    "id": "1499f8d6bce44439",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/comments/:id/like",
+    "url": "/api/comments/:id/like",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1720,
+    "wires": [
+      [
+        "37a3582f15284b5f"
+      ]
+    ]
+  },
+  {
+    "id": "37a3582f15284b5f",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "toggleCommentLike",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.toggleCommentLike(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1720,
+    "wires": [
+      [
+        "4691e1ead8324982"
+      ]
+    ]
+  },
+  {
+    "id": "4691e1ead8324982",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 730,
+    "y": 1720,
+    "wires": []
+  },
+  {
+    "id": "2c5b0ec7452b4fa0",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/comments/:id/retweet",
+    "url": "/api/comments/:id/retweet",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1780,
+    "wires": [
+      [
+        "3193740d80514c65"
+      ]
+    ]
+  },
+  {
+    "id": "3193740d80514c65",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "toggleCommentRetweet",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.toggleCommentRetweet(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1780,
+    "wires": [
+      [
+        "d4c191c42a694757"
+      ]
+    ]
+  },
+  {
+    "id": "d4c191c42a694757",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 730,
+    "y": 1780,
+    "wires": []
+  },
+  {
+    "id": "415c6b22e2c8464b",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/posts/:id/quote",
+    "url": "/api/posts/:id/quote",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1840,
+    "wires": [
+      [
+        "de4179ed35b24aaa"
+      ]
+    ]
+  },
+  {
+    "id": "de4179ed35b24aaa",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "quotePost",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.quotePost(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1840,
+    "wires": [
+      [
+        "e545fcc8be2b4e8d"
+      ]
+    ]
+  },
+  {
+    "id": "e545fcc8be2b4e8d",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 730,
+    "y": 1840,
+    "wires": []
+  },
+  {
+    "id": "2dd86e36f6084f6d",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/comments/:id/quote",
+    "url": "/api/comments/:id/quote",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 1900,
+    "wires": [
+      [
+        "acbb7690985140ff"
+      ]
+    ]
+  },
+  {
+    "id": "acbb7690985140ff",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "quoteComment",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.quoteComment(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 1900,
+    "wires": [
+      [
+        "0b4caac3d1984e5f"
+      ]
+    ]
+  },
+  {
+    "id": "0b4caac3d1984e5f",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 730,
+    "y": 1900,
+    "wires": []
+  },
+  {
+    "id": "dcd9214974e0465f",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/search/suggestions",
+    "url": "/api/search/suggestions",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 2220,
+    "wires": [
+      [
+        "81c8a62571374c89"
+      ]
+    ]
+  },
+  {
+    "id": "81c8a62571374c89",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "searchSuggestions",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.searchSuggestions(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 2220,
+    "wires": [
+      [
+        "c4bddee669c24c3c"
+      ]
+    ]
+  },
+  {
+    "id": "c4bddee669c24c3c",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 2220,
+    "wires": []
+  },
+  {
+    "id": "9720315cbbaa4e23",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/search",
+    "url": "/api/search",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 2280,
+    "wires": [
+      [
+        "b0a65835d054486c"
+      ]
+    ]
+  },
+  {
+    "id": "b0a65835d054486c",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "search",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.search(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 2280,
+    "wires": [
+      [
+        "55388a500d3649f5"
+      ]
+    ]
+  },
+  {
+    "id": "55388a500d3649f5",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 2280,
+    "wires": []
+  },
+  {
+    "id": "de7f092c74c0425b",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "PATCH /api/comments/:id",
+    "url": "/api/comments/:id",
+    "method": "patch",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 2320,
+    "wires": [
+      [
+        "30e29621713f46b2"
+      ]
+    ]
+  },
+  {
+    "id": "30e29621713f46b2",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "updateComment",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.updateComment(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 2320,
+    "wires": [
+      [
+        "cecbc442cc354794"
+      ]
+    ]
+  },
+  {
+    "id": "cecbc442cc354794",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 730,
+    "y": 2320,
+    "wires": []
+  },
+  {
+    "id": "b574d05db5414cba",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "DELETE /api/comments/:id",
+    "url": "/api/comments/:id",
+    "method": "delete",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 2380,
+    "wires": [
+      [
+        "c4d5d3190c264f75"
+      ]
+    ]
+  },
+  {
+    "id": "c4d5d3190c264f75",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "deleteComment",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.deleteComment(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 2380,
+    "wires": [
+      [
+        "d3976de582e84a11"
+      ]
+    ]
+  },
+  {
+    "id": "d3976de582e84a11",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 730,
+    "y": 2380,
+    "wires": []
+  },
+  {
+    "id": "32079c1b44400933",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/trainer/overview",
+    "url": "/api/trainer/overview",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 2440,
+    "wires": [
+      [
+        "b6daad9859a77e8d"
+      ]
+    ]
+  },
+  {
+    "id": "b6daad9859a77e8d",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "trainerOverview",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.trainerOverview(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 2440,
+    "wires": [
+      [
+        "20d77d62dd8beb9d"
+      ]
+    ]
+  },
+  {
+    "id": "20d77d62dd8beb9d",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 2440,
+    "wires": []
+  },
+  {
+    "id": "5e264cf55a586ee5",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "GET /api/trainer/targets",
+    "url": "/api/trainer/targets",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 2500,
+    "wires": [
+      [
+        "4882d226ec29b481"
+      ]
+    ]
+  },
+  {
+    "id": "4882d226ec29b481",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "trainerTargets",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.trainerTargets(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 2500,
+    "wires": [
+      [
+        "9af571b6238b2994"
+      ]
+    ]
+  },
+  {
+    "id": "9af571b6238b2994",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 2500,
+    "wires": []
+  },
+  {
+    "id": "4b5261191e942da1",
+    "type": "http in",
+    "z": "069900ac84e84deb",
+    "name": "POST /api/trainer/rate",
+    "url": "/api/trainer/rate",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 180,
+    "y": 2560,
+    "wires": [
+      [
+        "2a71ed40eb4e2a40"
+      ]
+    ]
+  },
+  {
+    "id": "2a71ed40eb4e2a40",
+    "type": "function",
+    "z": "069900ac84e84deb",
+    "name": "trainerRate",
+    "func": "const api = global.get(\"tfi\");\nPromise.resolve(api.trainerRate(msg))\n  .then(r => {\n    msg.statusCode = r.status || 200;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = r.body;\n    node.send(msg);\n  })\n  .catch(err => {\n    const status = Number(err.status || 500);\n    if (status >= 500) node.error(err, msg);\n    msg.statusCode = status;\n    msg.headers = {\"Content-Type\":\"application/json; charset=utf-8\",\"Cache-Control\":\"no-store\"};\n    msg.payload = {error: status >= 500 ? \"Erreur interne du serveur.\" : err.message};\n    node.send(msg);\n  });\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 2560,
+    "wires": [
+      [
+        "ddd427dc7d6a82e6"
+      ]
+    ]
+  },
+  {
+    "id": "ddd427dc7d6a82e6",
+    "type": "http response",
+    "z": "069900ac84e84deb",
+    "name": "JSON response",
+    "statusCode": "",
+    "headers": {},
+    "x": 720,
+    "y": 2560,
+    "wires": []
+  }
+]

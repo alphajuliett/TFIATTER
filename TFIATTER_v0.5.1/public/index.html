@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1da1f2" />
+  <title>TFI@TTER</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png?v=0.5.1" />
+  <link rel="stylesheet" href="/assets/style.css?v=0.5.1" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <nav class="main-nav hidden" id="mainNav" aria-label="Navigation principale">
+        <button class="nav-link active" data-nav="home"><span class="nav-icon" data-icon="home"></span> Accueil</button>
+        <button class="nav-link" data-nav="notifications"><span class="nav-icon" data-icon="bell"></span> Notifications <span id="notificationBadge" class="nav-badge hidden">0</span></button>
+        <button class="nav-link" data-nav="messages"><span class="nav-icon" data-icon="message"></span> Messages <span id="messageBadge" class="nav-badge hidden">0</span></button>
+      </nav>
+      <button class="brand" id="brandHome" aria-label="TFI@TTER accueil">T@</button>
+      <div class="top-actions">
+        <div class="search-wrap hidden" id="searchWrap">
+          <span class="search-leading" data-icon="search"></span>
+          <input id="searchInput" type="search" placeholder="Rechercher sur TFI@TTER" autocomplete="off" aria-autocomplete="list" aria-controls="searchSuggestions" />
+          <button id="searchClear" class="search-clear hidden" type="button" aria-label="Effacer la recherche">×</button>
+          <div id="searchSuggestions" class="search-suggestions hidden" role="listbox"></div>
+        </div>
+        <button id="headerAvatar" class="header-avatar avatar hidden" aria-label="Profil"></button>
+        <button id="loginButton" class="plain-button">Se connecter</button>
+        <button id="registerTopButton" class="tweet-button guest-register">S'inscrire</button>
+        <button id="tweetButton" class="tweet-button hidden">TFI@Ter</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="guestGate" class="guest-gate" aria-label="Connexion requise">
+    <section class="guest-gate-card">
+      <div class="guest-gate-brand">T@</div>
+      <h1>Bienvenue sur TFI@TTER</h1>
+      <p>Le fil d’actualité est accessible en lecture. Connectez-vous ou créez un compte pour interagir.</p>
+      <div class="guest-gate-actions">
+        <button class="tweet-button wide" data-open-auth="login">Se connecter</button>
+        <button class="outline-button wide" data-open-auth="register">Créer un compte</button>
+      </div>
+      <small>Publication, likes, republications, profils détaillés et messagerie nécessitent une connexion.</small>
+    </section>
+  </main>
+
+  <main class="page-shell hidden" id="pageShell">
+    <aside class="left-column">
+      <section id="profileCard" class="card profile-card guest-card">
+        <div class="guest-copy">
+          <h2>Bienvenue sur TFI@TTER</h2>
+          <p>Découvrez ce qui se passe en ce moment.</p>
+          <button class="tweet-button wide" data-open-auth="register">S'inscrire</button>
+          <button class="outline-button wide" data-open-auth="login">Se connecter</button>
+        </div>
+      </section>
+      <section class="footer-links" aria-label="Liens du pied de page">
+        <div class="footer-links-list">
+          <a href="#">À propos</a><a href="#">Centre d'aide</a><a href="#">Conditions</a><a href="#">Confidentialité</a><a href="#">Cookies</a><a href="#">Publicité</a>
+        </div>
+        <div class="footer-meta">© 2026 TFI@TTER · v0.5.1</div>
+      </section>
+    </aside>
+
+    <section class="center-column" id="centerColumn">
+      <div id="homePanel">
+        <section id="composer" class="composer hidden">
+          <div class="avatar composer-avatar" id="composerAvatar"></div>
+          <div class="composer-body">
+            <textarea id="composerText" rows="2" placeholder="Quoi de neuf ?"></textarea>
+            <div id="composerPreview" class="media-preview"></div>
+            <div class="composer-tools">
+              <div class="tool-buttons">
+                <label class="icon-button" title="Joindre une image, une vidéo ou un PDF"><span data-icon="paperclip"></span><input id="composerFiles" type="file" accept="image/*,video/mp4,video/webm,video/quicktime,application/pdf" multiple hidden /></label>
+                <button class="icon-button" data-emoji-target="composer" title="Ajouter un emoji"><span data-icon="smile"></span></button>
+                <button class="icon-button gif-button" data-gif-target="composer" title="Rechercher un GIF avec GIPHY"><span>GIF</span></button>
+                <button class="icon-button" data-decor-tool="Sondage" title="Créer un sondage"><span data-icon="poll"></span></button>
+                <button class="icon-button" data-decor-tool="Localisation" title="Ajouter une localisation"><span data-icon="location"></span></button>
+              </div>
+              <div class="composer-submit"><span class="unlimited-label" title="Aucune limite de caractères">∞</span><button id="sendPost" class="tweet-button">TFI@Ter</button></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="timeline-title"><strong>Accueil</strong><button id="refreshFeed" class="sparkle" title="Actualiser">✦</button></div>
+        <div id="feed" class="timeline"><div class="loading">Chargement du fil…</div></div>
+      </div>
+      <div id="profilePanel" class="hidden"></div>
+      <div id="notificationsPanel" class="hidden"></div>
+      <div id="messagesPanel" class="hidden"></div>
+      <div id="searchPanel" class="hidden"></div>
+    </section>
+
+    <aside class="right-column">
+      <section class="card sidebar-card who-card" id="suggestionsCard">
+        <div class="card-title-row"><h2>Suggestions</h2><button id="refreshSuggestions">Actualiser</button></div>
+        <div id="suggestionsList"></div>
+      </section>
+      <section class="card sidebar-card trends-card" id="trendsCard">
+        <div class="card-title-row"><h2>Tendances</h2><button id="refreshTrends">Actualiser</button></div>
+        <div id="trendsList"><div class="loading-small">Chargement…</div></div>
+      </section>
+      <section class="card sidebar-card search-filters-card hidden" id="searchFiltersCard">
+        <h2>Filtres de recherche</h2>
+        <div class="search-filter-group">
+          <strong>Personnes</strong>
+          <label><span>Tout le monde</span><input type="radio" name="searchPeople" value="anyone" checked></label>
+          <label><span>Comptes suivis</span><input type="radio" name="searchPeople" value="following"></label>
+        </div>
+        <div class="search-filter-group">
+          <strong>Localisation</strong>
+          <label><span>Partout</span><input type="radio" name="searchLocation" value="anywhere" checked></label>
+          <label id="nearbySearchLabel"><span>Près de vous</span><input type="radio" name="searchLocation" value="nearby"></label>
+          <small id="nearbySearchHint" class="hidden"></small>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <div id="authModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-box auth-box">
+      <button class="modal-close" data-close-modal>×</button>
+      <div class="auth-brand">T@</div>
+      <div class="auth-tabs"><button data-auth-tab="login" class="active">Connexion</button><button data-auth-tab="register">Inscription</button></div>
+      <form id="loginForm" class="auth-form">
+        <h2>Se connecter à TFI@TTER</h2>
+        <label>Nom d'utilisateur ou e-mail<input name="login" autocomplete="username" required /></label>
+        <label>Mot de passe<input name="password" type="password" autocomplete="current-password" required /></label>
+        <button class="tweet-button wide" type="submit">Se connecter</button>
+      </form>
+      <form id="registerForm" class="auth-form hidden">
+        <h2>Rejoindre TFI@TTER</h2>
+        <label>Nom affiché<input name="displayName" maxlength="50" required /></label>
+        <label>@nom_utilisateur<input name="username" pattern="[A-Za-z0-9_]{3,20}" required /></label>
+        <label>Adresse e-mail<input name="email" type="email" required /></label>
+        <label>Mot de passe<input name="password" type="password" minlength="8" required /></label>
+        <button class="tweet-button wide" type="submit">Créer mon compte</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="commentsModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-comments></div>
+    <div class="modal-box comments-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-comments>×</button><strong>Fil de discussion</strong></div>
+      <div id="commentsPost"></div>
+      <div id="commentsList" class="comments-list"></div>
+      <div id="commentComposer" class="comment-composer hidden">
+        <textarea id="commentText" placeholder="TFI@Tez votre réponse"></textarea>
+        <div id="commentPreview" class="media-preview compact"></div>
+        <div class="comment-tools"><div class="comment-tool-buttons"><label class="icon-button" title="Joindre un fichier"><span data-icon="paperclip"></span><input id="commentFiles" type="file" accept="image/*,video/mp4,video/webm,video/quicktime,application/pdf" multiple hidden /></label><button class="icon-button" data-emoji-target="comment" title="Ajouter un emoji"><span data-icon="smile"></span></button><button class="icon-button gif-button" data-gif-target="comment" title="Rechercher un GIF avec GIPHY"><span>GIF</span></button></div><button id="sendComment" class="tweet-button">Répondre</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="editPostModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-post-edit></div>
+    <div class="modal-box edit-post-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-post-edit>×</button><strong>Modifier le TFI@T</strong><button id="savePostEdit" class="tweet-button">Enregistrer</button></div>
+      <div class="edit-post-content">
+        <textarea id="editPostText" placeholder="Modifier le contenu du TFI@T"></textarea>
+        <p>Les médias existants sont conservés. Une modification réelle du texte affichera <b>Modifié</b> dans l’en-tête de la publication.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="editCommentModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-comment-edit></div>
+    <div class="modal-box edit-post-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-comment-edit>×</button><strong>Modifier la réponse</strong><button id="saveCommentEdit" class="tweet-button">Enregistrer</button></div>
+      <div class="edit-post-content">
+        <textarea id="editCommentText" placeholder="Modifier votre réponse"></textarea>
+        <p>Les médias déjà joints sont conservés.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="editProfileModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-edit></div>
+    <div class="modal-box edit-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-edit>×</button><strong>Modifier le profil</strong><button id="saveProfile" class="tweet-button">Enregistrer</button></div>
+      <div class="edit-banner" id="editBannerPreview"><label>Changer la bannière<input id="editBanner" type="file" accept="image/*" hidden /></label></div>
+      <div class="edit-avatar avatar" id="editAvatarPreview" title="Cliquez pour changer votre photo de profil"><label title="Changer la photo de profil"><span data-icon="camera"></span><span>Changer</span><input id="editAvatar" type="file" accept="image/*" hidden /></label></div>
+      <p class="avatar-help">Cliquez sur la photo pour ajouter ou remplacer votre photo de profil.</p>
+      <div class="edit-fields">
+        <label>Nom<input id="editDisplayName" maxlength="50" /></label>
+        <label>Bio<textarea id="editBio" maxlength="160"></textarea></label>
+        <label>Localisation<input id="editLocation" maxlength="60" /></label>
+        <label>Site web<input id="editWebsite" maxlength="160" /></label>
+      </div>
+    </div>
+  </div>
+
+  <div id="animationModal" class="modal hidden animation-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-animation></div>
+    <div class="modal-box animation-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-animation>×</button><strong>Panneau Animation</strong></div>
+      <div id="animationContent"><div class="loading">Chargement…</div></div>
+    </div>
+  </div>
+
+  <div id="adminModal" class="modal hidden admin-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-admin></div>
+    <div class="modal-box admin-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-admin>×</button><strong>Panneau administrateur</strong></div>
+      <div id="adminContent"><div class="loading">Chargement…</div></div>
+    </div>
+  </div>
+
+  <div id="connectionsModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-connections></div>
+    <div class="modal-box connections-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-connections>×</button><strong id="connectionsTitle">Abonnés</strong></div>
+      <div id="connectionsList" class="connections-list"><div class="loading">Chargement…</div></div>
+    </div>
+  </div>
+
+
+
+  <div id="repostModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-repost></div>
+    <div class="modal-box repost-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-repost>×</button><strong>Republier</strong></div>
+      <p id="repostTargetLabel" class="repost-target-label">Ce TFI@T</p>
+      <button id="repostDirect" class="repost-choice" type="button"><span class="repost-choice-icon" data-icon="retweet"></span><span><strong id="repostDirectLabel">Republier</strong><small>Partager directement avec vos abonnés</small></span></button>
+      <button id="repostQuote" class="repost-choice" type="button"><span class="repost-choice-icon" data-icon="quote"></span><span><strong>Citer</strong><small>Ajouter votre propre message</small></span></button>
+    </div>
+  </div>
+
+  <div id="quoteModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-quote></div>
+    <div class="modal-box quote-compose-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-quote>×</button><strong>Citer</strong><button id="sendQuote" class="tweet-button">TFI@Ter</button></div>
+      <div class="quote-composer">
+        <textarea id="quoteText" placeholder="Ajoutez un message"></textarea>
+        <div id="quotePreview" class="media-preview compact"></div>
+        <div id="quoteTargetPreview" class="quote-target-preview"></div>
+        <div class="comment-tools">
+          <div class="comment-tool-buttons">
+            <label class="icon-button" title="Joindre un fichier"><span data-icon="paperclip"></span><input id="quoteFiles" type="file" accept="image/*,video/mp4,video/webm,video/quicktime,application/pdf" multiple hidden /></label>
+            <button class="icon-button" data-emoji-target="quote" title="Ajouter un emoji"><span data-icon="smile"></span></button>
+            <button class="icon-button gif-button" data-gif-target="quote" title="Rechercher un GIF avec GIPHY"><span>GIF</span></button>
+          </div>
+          <span class="unlimited-label" title="Aucune limite de caractères">∞</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="emojiPopover" class="emoji-popover hidden" role="dialog" aria-label="Sélecteur d’emojis">
+    <div id="emojiTabs" class="emoji-tabs"></div>
+    <div id="emojiGrid" class="emoji-grid"></div>
+  </div>
+
+  <div id="mediaModal" class="modal media-modal hidden" role="dialog" aria-modal="true" aria-label="Aperçu du média">
+    <div class="modal-backdrop media-modal-backdrop" data-close-media></div>
+    <div class="media-modal-shell">
+      <button class="media-modal-close" data-close-media aria-label="Fermer">×</button>
+      <div id="mediaModalContent" class="media-modal-content"></div>
+      <div id="mediaModalCaption" class="media-modal-caption"></div>
+    </div>
+  </div>
+
+  <div id="gifModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close-gif></div>
+    <div class="modal-box gif-box">
+      <div class="modal-title"><button class="modal-close inline" data-close-gif>×</button><strong>Choisir un GIF</strong></div>
+      <form id="gifSearchForm" class="gif-search-form"><input id="gifSearchInput" maxlength="50" autocomplete="off" placeholder="Rechercher sur GIPHY…"><button class="tweet-button" type="submit">Rechercher</button></form>
+      <div id="gifStatus" class="gif-status">Chargement des GIF populaires…</div>
+      <div id="gifGrid" class="gif-grid"></div>
+      <div class="giphy-attribution">Powered By <strong>GIPHY</strong></div>
+    </div>
+  </div>
+
+  <script src="/assets/app.js?v=0.5.1"></script>
+</body>
+</html>

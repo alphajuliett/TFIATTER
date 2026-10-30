@@ -1,0 +1,15 @@
+TFI@TTER v0.5.1 — passage à 100 millions de followers
+
+1. Sauvegarde conseillée :
+   docker compose exec -T postgres pg_dump -U tfiatter -d tfiatter > backup-avant-v051.sql
+
+2. Appliquer uniquement la nouvelle migration :
+   docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U tfiatter -d tfiatter < postgres/migrations/013_v051.sql
+
+3. Reconstruire Node-RED :
+   docker compose up --build -d nodered
+
+4. Dans le navigateur : Ctrl+F5
+
+La migration 013_v051.sql est non destructive : elle ne supprime ni ne réinitialise les comptes existants.
+Le champ Nombre d’abonnés accepte maintenant 0 à 100 000 000.
